@@ -5,6 +5,11 @@ let imageOne = document.getElementById('image-one');
 let imageTwo = document.getElementById('image-two');
 let imageThree = document.getElementById('image-three');
 
+imageOne.addEventListener('click', onClick);
+imageTwo.addEventListener('click', onClick);
+imageThree.addEventListener('click', onClick);
+
+
 console.log('image one', imageOne);
 
 // ALL IMAGES
@@ -56,34 +61,35 @@ function getRandomImages() {
     console.log(uniqueIndices);
   }
   console.log('Filled in unique products', uniqueIndices);
+  imageOne.src = uniqueIndices[0].path;
+  imageOne.alt = uniqueIndices[0].name;
+  
+  imageTwo.src = uniqueIndices[1].path;
+  imageTwo.alt = uniqueIndices[1].name;
+  
+  imageThree.src = uniqueIndices[2].path;
+  imageThree.alt = uniqueIndices[2].name;
+  
 }
-imageOne.src = allConstructedProducts[0].path;
-imageOne.alt = allConstructedProducts[0].name;
-
-imageTwo.src = allConstructedProducts[1].path;
-imageTwo.alt = allConstructedProducts[1].name;
-
-imageThree.src = allConstructedProducts[2].path;
-imageThree.alt = allConstructedProducts[2].name;
-
-function displayImages() {
-  imageOne = uniqueIndices[0];
-  imageTwo = uniqueIndices[1];
-  imageThree = uniqueIndices[2];
-}
+getRandomImages();
 
 function onClick(event) {
   console.log(event);
   console.log('image container was clicked');
-  if (event.target.alt === allConstructedProducts[0].name) {
-    allConstructedProducts[0].clicks++;
-    imageContainer.removeEventListener('click', onClick);
-    getRandomImages();
+  if (event.target.alt === uniqueIndices[0].name) {
+    uniqueIndices[0].clicks++;
   }
-
+  if (event.target.alt === uniqueIndices[1].name) {
+    uniqueIndices[1].clicks++;
+  }
+  if (event.target.alt === uniqueIndices[2].name) {
+    uniqueIndices[2].clicks++;
+  }
+  console.log(uniqueIndices);
+  getRandomImages();
 }
 
 
 
 document.getElementById('display-images');
-imageContainer.addEventListener('click', onClick);
+// imageContainer.addEventListener('click', onClick);
