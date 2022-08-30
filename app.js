@@ -9,8 +9,11 @@ imageOne.addEventListener('click', onClick);
 imageTwo.addEventListener('click', onClick);
 imageThree.addEventListener('click', onClick);
 
+let result = document.getElementById('results');
+let maxClicks = 5;
+let clicks = 0;
 
-console.log('image one', imageOne);
+// console.log('image one', imageOne);
 
 // ALL IMAGES
 let imgArray = [
@@ -37,30 +40,35 @@ let imgArray = [
 let allConstructedProducts = [];
 
 // CONSTRUCTOR
-function Product(name, path) {
+function Product(name,path) {
 
   this.name = name;
   this.path = path;
-
   this.shown = 0;
-  this.clicks = 0;
-  allConstructedProducts.push(this);
+  this.score = 0;
+  // this.clicks = 0;
 }
+
 for (let i = 0; i < imgArray.length; i++) {
-  new Product(imgArray[i].name, imgArray[i].path);
+  const product = new Product(imgArray[i].name, imgArray[i].path);
+  allConstructedProducts.push(product);
 }
-console.log(allConstructedProducts);
+// console.log(allConstructedProducts);
+
 let uniqueIndices = [];
+
 function getRandomImages() {
   uniqueIndices = [];
   while (uniqueIndices.length < 3) {
     let randomNumber = Math.floor(Math.random() * imgArray.length);
-    if (!uniqueIndices.includes(allConstructedProducts[randomNumber])) {
-      uniqueIndices.push(allConstructedProducts[randomNumber]);
+    const product = allConstructedProducts[randomNumber];
+    if (!uniqueIndices.includes(product)) {
+      uniqueIndices.push(product);
+      product.shown++;
     }
-    console.log(uniqueIndices);
+    // console.log(uniqueIndices);
   }
-  console.log('Filled in unique products', uniqueIndices);
+  // console.log('Filled in unique products', uniqueIndices);
   imageOne.src = uniqueIndices[0].path;
   imageOne.alt = uniqueIndices[0].name;
 
@@ -74,22 +82,55 @@ function getRandomImages() {
 getRandomImages();
 
 function onClick(event) {
-  console.log(event);
-  console.log('image container was clicked');
-  if (event.target.alt === uniqueIndices[0].name) {
-    uniqueIndices[0].clicks++;
+  clicks++;
+  // console.log(clicks);
+  // console.log(event.target.id);
+  // console.log('image container was clicked');
+  let clickedImage = event.target.alt;
+
+  if (clicks >= maxClicks){
+    showResults();
+
+  } else {
+    for (let i = 0; i < uniqueIndices.length; i++){
+      if (clickedImage === uniqueIndices[i].name){
+        // uniqueIndices[i].clicks++;
+        uniqueIndices[i].score++;
+        // console.log(uniqueIndices[i].score);
+        break;
+      }
+    }
+    getRandomImages();
   }
-  if (event.target.alt === uniqueIndices[1].name) {
-    uniqueIndices[1].clicks++;
-  }
-  if (event.target.alt === uniqueIndices[2].name) {
-    uniqueIndices[2].clicks++;
-  }
-  console.log(uniqueIndices);
-  getRandomImages();
+  // if (event.target.alt === uniqueIndices[0].name) {
+  //   uniqueIndices[0].clicks++;
+  // }
+  // if (event.target.alt === uniqueIndices[1].name) {
+  //   uniqueIndices[1].clicks++;
+  // }
+  // if (event.target.alt === uniqueIndices[2].name) {
+  //   uniqueIndices[2].clicks++;
+  // }
+
+  // console.log(uniqueIndices);
+  // getRandomImages();
 }
 
+function showResults(){
+  let ul = document.getElementById('result');
+  for (let i = 0; i < allConstructedProducts.length; i++){
+    const product = allConstructedProducts[i];
+    console.log(`Name is ${product.name} Score is ${product.score} and shown is ${product.shown}`);
+  }
 
-
+  // for (let i = 0; i < imgArray.length; i++){
+  //   let title = document.createElement('li');
+  //   // title.textContent = `${uniqueIndices[i].name} : ${uniqueIndices[i].clicks}`;
+  //   title.textContent = `${uniqueIndices[i].name} : ${uniqueIndices[i].score}`;
+  //   ul.appendChild(title);
+  // }
+}
 document.getElementById('display-images');
 // imageContainer.addEventListener('click', onClick);
+
+
