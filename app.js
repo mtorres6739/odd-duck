@@ -28,7 +28,7 @@ let imgArray = [
   { path: './img/pet-sweep.jpg', name: 'pet-sweep' },
   { path: './img/scissors.jpg', name: 'scissors' },
   { path: './img/shark.jpg', name: 'shark' },
-  { path: './img/sweep.jpg', name: 'sweep' },
+  { path: './img/sweep.png', name: 'sweep' },
   { path: './img/tauntaun.jpg', name: 'tauntaun' },
   { path: './img/water-can.jpg', name: 'water-can' },
   { path: './img/wine-glass.jpg', name: 'wine-glass' }
@@ -63,13 +63,13 @@ function getRandomImages() {
   console.log('Filled in unique products', uniqueIndices);
   imageOne.src = uniqueIndices[0].path;
   imageOne.alt = uniqueIndices[0].name;
-  
+
   imageTwo.src = uniqueIndices[1].path;
   imageTwo.alt = uniqueIndices[1].name;
-  
+
   imageThree.src = uniqueIndices[2].path;
   imageThree.alt = uniqueIndices[2].name;
-  
+
 }
 getRandomImages();
 
