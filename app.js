@@ -16,7 +16,7 @@ Product.theWholeSheBang = [];
 let maxClicks = 25;
 let clicks = 0;
 
-// console.log('image one', imageOne);
+
 
 // ALL IMAGES
 let imgArray = [
@@ -60,7 +60,7 @@ for (let i = 0; i < imgArray.length; i++) {
   const product = new Product(imgArray[i].name, imgArray[i].path);
   allConstructedProducts.push(product);
 }
-// console.log(allConstructedProducts);
+
 
 let uniqueIndices = [];
 
@@ -73,9 +73,9 @@ function getRandomImages() {
       uniqueIndices.push(product);
       product.shown++;
     }
-    // console.log(uniqueIndices);
+
   }
-  // console.log('Filled in unique products', uniqueIndices);
+
   imageOne.src = uniqueIndices[0].path;
   imageOne.alt = uniqueIndices[0].name;
 
@@ -90,9 +90,7 @@ getRandomImages();
 
 function onClick(event) {
   clicks++;
-  // console.log(clicks);
-  // console.log(event.target.id);
-  // console.log('image container was clicked');
+
   let clickedImage = event.target.alt;
 
   if (clicks >= maxClicks) {
@@ -104,7 +102,7 @@ function onClick(event) {
       if (clickedImage === uniqueIndices[i].name) {
         // uniqueIndices[i].clicks++;
         uniqueIndices[i].score++;
-        // console.log(uniqueIndices[i].score);
+
         break;
       }
     }
@@ -120,7 +118,7 @@ function onClick(event) {
   //   uniqueIndices[2].clicks++;
   // }
 
-  // console.log(uniqueIndices);
+
   // getRandomImages();
 
   // Local Storage - store items
@@ -142,7 +140,7 @@ function showResults() {
     title.textContent = `${allConstructedProducts[i].name}: ${allConstructedProducts[i].score} clicks, ${allConstructedProducts[i].shown} views`;
     ul.appendChild(title);
 
-    // console.log(`Name is ${product.name} Score is ${product.score} and shown is ${product.shown}`);
+
   }
   return ul;
 
@@ -223,9 +221,3 @@ function renderChart() {
     }
   });
 }
-
-
-
-
-
-
