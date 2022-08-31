@@ -9,6 +9,9 @@ imageOne.addEventListener('click', onClick);
 imageTwo.addEventListener('click', onClick);
 imageThree.addEventListener('click', onClick);
 
+// Local Storage - Array for local storage
+Product.theWholeSheBang = [];
+
 // let result = document.getElementById('result');
 let maxClicks = 25;
 let clicks = 0;
@@ -46,7 +49,11 @@ function Product(name, path) {
   this.path = path;
   this.shown = 0;
   this.score = 0;
-  // this.clicks = 0;
+
+  // Local Storage - Add every image that gets created into an array (this is part of the function below that I commented out because it was making a duplicate)
+  // Product.theWholeSheBang.push(this);
+  // updateStorage();
+
 }
 
 for (let i = 0; i < imgArray.length; i++) {
@@ -115,7 +122,13 @@ function onClick(event) {
 
   // console.log(uniqueIndices);
   // getRandomImages();
+
+  // Local Storage - store items
+  let toStore = Product.theWholeSheBang;
+  localStorage.setItem('toStore', JSON.stringify(toStore));
 }
+
+
 
 let button = document.getElementById('product-button');
 button.addEventListener('click', showResults);
@@ -143,9 +156,19 @@ document.getElementById('display-images');
 
 
 
+// Local Storage (started writing this, but seems to make a duplicate object)
 
+// function updateStorage() {
+//   const arrayString = JSON.stringify(Product.theWholeSheBang);
+//   console.log(arrayString);
+//   localStorage.setItem('image', arrayString);
+// }
 
-
+// Local Storage - load orders and display them
+let maybeStored = localStorage.getItem('toStore');
+if (maybeStored) {
+  Product.theWholeSheBang = JSON.parse(maybeStored);
+}
 
 // CHART
 
