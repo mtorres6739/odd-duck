@@ -9,8 +9,8 @@ imageOne.addEventListener('click', onClick);
 imageTwo.addEventListener('click', onClick);
 imageThree.addEventListener('click', onClick);
 
-let result = document.getElementById('results');
-let maxClicks = 5;
+// let result = document.getElementById('result');
+let maxClicks = 25;
 let clicks = 0;
 
 // console.log('image one', imageOne);
@@ -40,7 +40,7 @@ let imgArray = [
 let allConstructedProducts = [];
 
 // CONSTRUCTOR
-function Product(name,path) {
+function Product(name, path) {
 
   this.name = name;
   this.path = path;
@@ -88,12 +88,13 @@ function onClick(event) {
   // console.log('image container was clicked');
   let clickedImage = event.target.alt;
 
-  if (clicks >= maxClicks){
-    showResults();
+  if (clicks >= maxClicks) {
+    // showResults();
+    // renderChart();
 
   } else {
-    for (let i = 0; i < uniqueIndices.length; i++){
-      if (clickedImage === uniqueIndices[i].name){
+    for (let i = 0; i < uniqueIndices.length; i++) {
+      if (clickedImage === uniqueIndices[i].name) {
         // uniqueIndices[i].clicks++;
         uniqueIndices[i].score++;
         // console.log(uniqueIndices[i].score);
@@ -116,21 +117,92 @@ function onClick(event) {
   // getRandomImages();
 }
 
-function showResults(){
+let button = document.getElementById('product-button');
+button.addEventListener('click', showResults);
+button.addEventListener('click', renderChart);
+
+function showResults() {
   let ul = document.getElementById('result');
-  for (let i = 0; i < allConstructedProducts.length; i++){
-    const product = allConstructedProducts[i];
-    console.log(`Name is ${product.name} Score is ${product.score} and shown is ${product.shown}`);
+  for (let i = 0; i < allConstructedProducts.length; i++) {
+    // const product = allConstructedProducts[i];
+    let title = document.createElement('li');
+    title.textContent = `${allConstructedProducts[i].name}: ${allConstructedProducts[i].score} clicks, ${allConstructedProducts[i].shown} views`;
+    ul.appendChild(title);
+
+    // console.log(`Name is ${product.name} Score is ${product.score} and shown is ${product.shown}`);
   }
+  return ul;
 
   // for (let i = 0; i < imgArray.length; i++){
   //   let title = document.createElement('li');
-  //   // title.textContent = `${uniqueIndices[i].name} : ${uniqueIndices[i].clicks}`;
-  //   title.textContent = `${uniqueIndices[i].name} : ${uniqueIndices[i].score}`;
-  //   ul.appendChild(title);
+  // title.textContent = `${uniqueIndices[i].name} : ${uniqueIndices[i].clicks}`;
   // }
 }
 document.getElementById('display-images');
 // imageContainer.addEventListener('click', onClick);
+
+
+
+
+
+
+
+// CHART
+
+function capitalize(str) {
+  let returnValue = str.split('');
+  returnValue[0] = returnValue[0].toUpperCase();
+  returnValue = returnValue.join('');
+  return returnValue;
+}
+
+
+function renderChart() {
+
+  let productNames = [];
+  let productClicks = [];
+  let productViews = [];
+
+  for (let i = 0; i < allConstructedProducts.length; i++) {
+    productNames.push(capitalize(allConstructedProducts[i].name));
+    productClicks.push(allConstructedProducts[i].score);
+    productViews.push(allConstructedProducts[i].shown);
+  }
+
+  const data = {
+    labels: productNames,
+    datasets: [{
+      label: 'Clicks',
+      data: productClicks,
+      backgroundColor: ['rgba(0,255,0.5)'],
+      borderColor: ['rgba(0,255,0,1)'],
+      borderWidth: 1
+    },
+    {
+      label: 'Views',
+      data: productViews,
+      backgroundColor: ['rgba(0,0,255,0.5)'],
+      borderColor: ['rgba(0,0,255,1)'],
+      borderWidth: 1
+    }]
+  };
+
+  const ctx = document.getElementById('myChart');
+  const myChart = new Chart(ctx, {
+    type: 'bar',
+    data: data,
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+        }
+      }
+    }
+  });
+}
+
+
+
+
 
 
